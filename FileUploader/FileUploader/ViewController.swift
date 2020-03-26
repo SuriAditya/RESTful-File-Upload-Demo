@@ -22,13 +22,16 @@ class ViewController: UIViewController {
 
 
     func uploadSingleFile() {
-        let fileURL = Bundle.main.url(forResource: "sampleText", withExtension: "txt")
-        let fileInfo = RestManager.FileInfo(withFileURL: fileURL, filename: "sampleText.txt", name: "uploadedFile", mimetype: "text/plain")
+        let fileURL = Bundle.main.url(forResource: "samplePDF", withExtension: "pdf")
+        let fileInfo = RestManager.FileInfo(withFileURL: fileURL, filename: "samplePDF.pdf", name: "claim_file", mimetype: "application/pdf")
         
-        rest.httpBodyParameters.add(value: "Hello 😀 !!!", forKey: "greeting")
-        rest.httpBodyParameters.add(value: "AppCoda", forKey: "user")
-        
-        upload(files: [fileInfo], toURL: URL(string: "http://localhost:3000/upload"))
+        //rest.httpBodyParameters.add(value: "Hello 😀 !!!", forKey: "greeting")
+        //rest.httpBodyParameters.add(value: "AppCoda", forKey: "user")
+        rest.httpBodyParameters.add(value: "ETSecured", forKey: "apiLogin")
+        rest.httpBodyParameters.add(value: "ETPassSecured", forKey: "apiPass")
+
+        //print(rest.httpBody)
+        upload(files: [fileInfo], toURL: URL(string: "http://192.168.29.97/trackpay/api/save_claim_files/"))
     }
     
     
@@ -58,7 +61,9 @@ class ViewController: UIViewController {
                 }
                 
                 if let data = results.data {
+                    print("Success \(String(describing: results))")
                     if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
+                        print("Inside")
                         print(toDictionary)
                     }
                 }
